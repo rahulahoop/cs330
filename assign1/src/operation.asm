@@ -63,13 +63,19 @@ _denom:
 	   mov ebx, [num2]
 	   sub ebx, '0'
 	   
-	   ;subtract number
-	   sub eax, ebx
-	   add eax, '0'
-	   mov [denom] , eax
-	   
-      	   cmp eax, ebx
+	   cmp eax, ebx
            jbe _err
+	   
+           ;subtract number
+	   sub eax, ebx
+
+
+           add eax, '0'
+
+           cmp eax, 0
+           je _err
+
+	   mov [denom] , eax
            int 0x80
 	   
 	   mov eax, 4
@@ -115,14 +121,14 @@ _frac:
 	   ; remove and add ascii 0
 	   
 	   xor edx, edx
-           mov eax,  [numerator]
+           mov eax, [numerator]
            sub eax, '0'
  
            mov ebx, [denom]
            sub ebx, '0'
 	   mov edx, 0
 	
-	   idiv ebx
+	   div ebx
 	   add eax, '0'
 	   mov [frac], eax
 	   int 0x80
@@ -209,4 +215,6 @@ _exit:
        mov eax, 1
        mov ebx, 0
        int 0x80
+
+       ret
 

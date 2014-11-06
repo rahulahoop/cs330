@@ -128,6 +128,7 @@ _frac:
            sub ebx, '0'
 	   mov edx, 0
 	
+	   cdq
 	   div ebx
 	   add eax, '0'
 	   mov [frac], eax
